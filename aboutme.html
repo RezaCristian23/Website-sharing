@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MekaKalku - About</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.5), rgba(0, 0, 0, 0.7)),
+                        url('https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png') center center no-repeat;
+            background-size: 200px, cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 850px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        .container h1 {
+            margin-top: 0;
+            font-weight: 600;
+        }
+        .container p {
+            line-height: 1.6;
+        }
+        a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        /* Bagian dokumentasi scroll */
+        .doc-section {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: white;
+            color: black;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        /* Scrollbar style */
+        .doc-section::-webkit-scrollbar {
+            width: 8px;
+        }
+        .doc-section::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .doc-section::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Me, MekaKalku</h1>
+        <p>Hello! Aku adalah Kalkulator(MekaKalku / Mekalaku) yang dibuat dan didirikan di JGRP, aku bisa bantu para mekanik untuk melakukan kalkulasi, catatan, dan track record detail segala mekanik yang dibutuhkan, seperti riwayat penggunaan component, hasil jual serta keuntungan yang didapatkan.</p>
+        <p>Kalau kamu bingung bagaimana penggunaan, silahkan lihat <a href="#dokumentasi">dokumentasi ini</a> atau tanya langsung ke <a href="https://jogjagamers.org/profile/133290-ckyandaa2/" target="_blank">forum saya</a>.</p>
+        <div class="doc-section">
+            <ul>
+                <li id="dokumentasi">Apa kegunaan textarea di kalkulator ini?</li>
+                <img src="https://i.postimg.cc/7P53wd6c/image.png" alt="" class="img-fluid">
+                <p>Textarea di kalkulator ini berguna untuk memasukan berapa component yang dibutuhkan untuk melakukan kalkuasi yang menghasilkan sebuah keuntungan, contoh 202 40. Kamu bisa melakukan spasi untuk menambahkan automatis serta memisahkan setiap component yang dibutuhkan.</p>
+                <h5>For your information, ketika setiap kali kamu melakukan enter di textarea, maka otomatis inputan tersebut masuk ke dalam riwayat, kamu bisa cek di paling bawah.</h5>
+                
+                <li>Apa kegunaan input keuntungan di kalkulator ini?</li>
+                <img src="https://i.postimg.cc/DZM11dCB/image.png" alt="" class="img-fluid">
+                <p>Input keuntungan di kalkulator ini berguna untuk memasukan berapa keuntungan yang ingin didapatkan dari setiap komponen yang dijual. Contoh: harga default dari sistemnya adalah mengambil keuntungan $50, namun ketika kamu tidak suka atau terlalu mahal kamu bisa melakukan pengurangan atau penambahan keuntungan sesuai yang kamu inginkan.</p>
+                
+                <li>Apa kegunaan informasi di bawah keuntungan?</li>
+                <img src="https://i.postimg.cc/XJC9cBTW/image.png" alt="" class="img-fluid">
+                <p>Informasi di bawah keuntungan berguna untuk memberikan gambaran kepada pengguna mengenai estimasi keuntungan yang akan didapatkan berdasarkan input yang telah dimasukkan. Dengan informasi ini, pengguna dapat lebih mudah memahami potensi keuntungan dari setiap komponen yang dijual.</p>
+                <p>Ketika komponen yang diinput lebih dari 200 maka harga jual akan dikali dua dari hasil keuntungan.</p>
+            </ul>
+        </div>
+        <ul style="display: flex;
+                   gap: 10px; list-style: none; padding: 0; margin: 0; font-size: 12px; padding-top: 10px;">
+            <li><a href="index.html">Kalkulator Componen</a></li>
+            <li><a href="riwayat.html">Riwayat Input Componen</a></li>
+            <li><a href="aboutme.html">About Me</a></li>
+        </ul>
+        <footer>
+            <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 20px;">&copy; 2025 MekaKalku. All rights reserved.</p>
+            <p style="font-size: 12px; color: #aaa; text-align: center; ">Made with ❤️ by <a href="https://jogjagamers.org/profile/133290-ckyandaa2/" target="_blank" style="color: #00d4ff;">Ckyandaa2</a></p>
+        </footer>
+    </div>
+</body>
+</html>

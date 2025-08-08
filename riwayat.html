@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riwayat Input Komponen</title>
+     <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+  <style>
+  body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      animation: gradientBG 12s ease infinite;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: rgb(2, 2, 2);
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .totals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .total-box {
+      background-color: #eaf4ff;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .total-box span {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .total-box strong {
+      font-size: 20px;
+      color: #007BFF;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      th, td {
+        padding: 10px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Riwayat Input Komponen</h1>
+    <div class="table-container" id="riwayatContainer"></div>
+    <div class="button-group">
+      <button onclick="hapusTerpilih()">Hapus yang di pilih</button>
+      <button onclick="hapusSemua()">Hapus Semua Riwayat</button>
+    </div>
+  </div>
+
+  <script>
+    let dataRiwayat = JSON.parse(localStorage.getItem('riwayatComponent')) || [];
+    const container = document.getElementById('riwayatContainer');
+
+    function renderTable() {
+      if (dataRiwayat.length === 0) {
+        container.innerHTML = '<p style="text-align:center">Tidak ada riwayat yang tersimpan.</p>';
+        return;
+      }
+
+      let totalKomponen = 0;
+      let totalHargaAsli = 0;
+      let totalKeuntungan = 0;
+      let totalHargaJual = 0;
+
+      let tableHTML = `
+        <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Pilih</th>
+              <th>No</th>
+              <th>Total Komponen</th>
+              <th>Harga Asli</th>
+              <th>Keuntungan</th>
+              <th>Harga Jual</th>
+              <th>Waktu Input</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      dataRiwayat.forEach((item, index) => {
+        tableHTML += `
+          <tr>
+            <td><input type="checkbox" class="hapusCheckbox" data-index="${index}"></td>
+            <td>${index + 1}</td>
+            <td>${item.totalComponent}</td>
+            <td style="color: #ff9800;">$${item.hargaAsli.toFixed(2)}</td>
+            <td>$${item.keuntungan.toFixed(2)}</td>
+            <td style="color: green;" >$${item.hargaJual.toFixed(2)}</td>
+            <td>${item.waktuInput || '-'}</td>
+          </tr>
+        `;
+
+        totalKomponen += item.totalComponent;
+        totalHargaAsli += item.hargaAsli;
+        totalKeuntungan += item.keuntungan;
+        totalHargaJual += item.hargaJual;
+      });
+
+      tableHTML += '</tbody></table></div>';
+
+      const totalHTML = `
+        <div class="totals">
+          <div class="total-box">
+            <span>Total Komponen</span>
+            <strong>${totalKomponen}</strong>
+          </div>
+          <div class="total-box">
+            <span>Total Harga Asli</span>
+            <strong>$${totalHargaAsli.toFixed(2)}</strong>
+          </div>
+          <div class="total-box">
+            <span>Total Keuntungan</span>
+            <strong>$${totalKeuntungan.toFixed(2)}</strong>
+          </div>
+          <div class="total-box">
+            <span>Total Harga Jual</span>
+            <strong style="color: green;">$${totalHargaJual.toFixed(2)}</strong>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = tableHTML + totalHTML;
+    }
+
+    function hapusTerpilih() {
+      const checkboxTerpilih = document.querySelectorAll('.hapusCheckbox:checked');
+      if (checkboxTerpilih.length === 0) {
+        alert('Pilih data yang ingin dihapus.');
+        return;
+      }
+
+      const indexTerpilih = Array.from(checkboxTerpilih)
+        .map(cb => parseInt(cb.getAttribute('data-index')));
+
+      dataRiwayat = dataRiwayat.filter((_, index) => !indexTerpilih.includes(index));
+      localStorage.setItem('riwayatComponent', JSON.stringify(dataRiwayat));
+      renderTable();
+    }
+
+    function hapusSemua() {
+      if (confirm("Yakin ingin menghapus semua riwayat?")) {
+        localStorage.removeItem('riwayatComponent');
+        dataRiwayat = [];
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
