@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Riwayat Input Komponen</title>
-     <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
   <style>
   body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,6 +46,20 @@
       width: 100%;
       border-collapse: collapse;
       min-width: 700px;
+    }
+
+    /* Scroll kalau row lebih dari 15 */
+    .table-container tbody {
+      display: block;
+      max-height: 500px; /* Tinggi maksimal tabel */
+      overflow-y: auto;
+    }
+
+    .table-container thead,
+    .table-container tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
     }
 
     th, td {
@@ -135,6 +149,14 @@
       <button onclick="hapusTerpilih()">Hapus yang di pilih</button>
       <button onclick="hapusSemua()">Hapus Semua Riwayat</button>
     </div>
+    <ul style="display: flex; gap: 16px; list-style: none; padding: 0; margin: 20px 0 0 0; justify-content: center;">
+      <li><a href="index.html" style="text-decoration: none; color: #007BFF;">Kalkulator Komponen</a></li>
+      <li><a href="aboutme.html" style="text-decoration: none; color: #007BFF;">About Me</a></li>
+    </ul>
+    <footer>
+      <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 20px;">&copy; 2025 MekaKalku. All rights reserved.</p>
+      <p style="font-size: 12px; color: #aaa; text-align: center; ">Made with ❤️ by <a href="https://www.instagram.com/rezacristiansilalahi?igsh=MXJ3ZnFtYmk4MmJqbA==" target="_blank" style="color: #00d4ff;">Ckyandaa2</a></p>
+    </footer>
   </div>
 
   <script>
