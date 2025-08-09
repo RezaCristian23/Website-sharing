@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kontak Kami</title>
+<!-- Import font Google -->
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #e0e0e0;
+  }
+
+  /* Glassmorphism background blur */
+  body::before {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: linear-gradient(45deg, #000000, rgba(6, 71, 150, 0.85), rgba(8, 102, 202, 0.85), #16c79a);
+    background-size: 600% 600%;
+    animation: gradientShift 15s ease infinite;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.8;
+    border-radius: 50%;
+  }
+
+  @keyframes gradientShift {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+
+  /* Container form */
+  .form-container {
+    background: rgba(109, 1, 1, 0.1);
+    border-radius: 20px;
+    padding: 40px 30px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow:
+      0 4px 30px rgba(0,0,0,0.3),
+      inset 0 0 60px rgba(255 255 255 / 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255 255 255 / 0.2);
+  }
+
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 1.2px;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #d0d6ff;
+    text-shadow: 0 0 5px rgba(255 255 255 / 0.7);
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255 255 255 / 0.15);
+    color: #f0f0f0;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: inset 0 0 8px rgba(255 255 255 / 0.25);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  input::placeholder, textarea::placeholder {
+    color: rgba(255 255 255 / 0.6);
+    font-style: italic;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    background: rgba(255 255 255 / 0.3);
+    box-shadow: 0 0 12px #7c82ff, inset 0 0 10px #a3a8ff;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 10px;
+    }
+     a:hover {
+            text-decoration: underline;
+    }
+
+  button {
+    width: 100%;
+    padding: 16px 0;
+    background: linear-gradient(45deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85));
+    border-radius: 14px;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255 92 124, 0.6);
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+    user-select: none;
+  }
+
+  button:hover {
+    background: linear-gradient(45deg, rgba(6, 71, 150, 0.85), rgba(8, 102, 202, 0.85));
+    box-shadow: 0 12px 25px rgba(107, 82, 255, 0.9);
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 30px 20px;
+      border-radius: 16px;
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Kirim Pesan kepada bkekok</h2>
+    <form action="https://formspree.io/f/xovlyjyw" method="POST">
+      <div class="form-group">
+        <label for="name">Nama Anda:</label>
+        <input type="text" id="name" name="name" placeholder="Masukkan nama lengkap" required />
+      </div>
+      <div class="form-group">
+        <label for="_replyto">Email Pengirim:</label>
+        <input type="email" id="_replyto" name="_replyto" placeholder="example@mail.com" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Pesan Anda:</label>
+        <textarea id="message" name="message" placeholder="Tulis pesan Anda di sini..." required></textarea>
+      </div>
+      <button type="submit">Kirim Pesan</button>
+    </form>
+        <ul style="display: flex;
+                   gap: 10px; list-style: none; padding: 0; margin: 0; font-size: 12px; padding-top: 10px;">
+            <li><a href="index.html">Kalkulator Componen</a></li>
+            <li><a href="riwayat.html">Riwayat Input Componen</a></li>
+            <li><a href="aboutme.html">About Me</a></li>
+            <li><a href="analisa.html">Kunjungan</a></li>
+             <li><a href="catatan.html">Catatan</a></li>
+        </ul>
+  </div>
+  <script>
+     // From analisa
+            document.addEventListener('DOMContentLoaded', (event) => {
+            const pageName = window.location.pathname.split('/').pop();
+            
+            // Buat kunci unik untuk sesi ini, misal: "visited_index.html"
+            const sessionKey = `visited_${pageName}`;
+
+            // Periksa apakah pengunjung sudah pernah dicatat di sesi ini
+            if (!sessionStorage.getItem(sessionKey)) {
+                // Jika belum ada di sessionStorage, catat sebagai kunjungan baru
+                let visitData = JSON.parse(localStorage.getItem('myWebsiteAnalytics')) || {};
+                
+                if (visitData[pageName]) {
+                    visitData[pageName] += 1;
+                } else {
+                    visitData[pageName] = 1;
+                }
+                
+                localStorage.setItem('myWebsiteAnalytics', JSON.stringify(visitData));
+                
+                console.log(`Kunjungan ke halaman "${pageName}" tercatat.`);
+
+                // Tambahkan penanda ke sessionStorage agar tidak dihitung lagi di sesi ini
+                sessionStorage.setItem(sessionKey, 'true');
+            } else {
+                console.log(`Kunjungan ke halaman "${pageName}" sudah tercatat di sesi ini.`);
+            }
+        });
+  </script>
+
+</body>
+</html>

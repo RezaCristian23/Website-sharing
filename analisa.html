@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kunjungan Website</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        :root {
+            --bg-color: #0f1c3a;
+            --container-bg: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.2);
+            --text-color: #e0e7ff;
+            --accent-color: #8a70ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f1c3a 0%, #1e3a6a 100%);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #7b42f5, #b886fe);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #fe8c00, #f83600);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        h1 {
+            color: var(--text-color);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .sub-heading {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            font-weight: 400;
+        }
+
+        li span {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.2em;
+        }
+
+        .last-updated {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 30px;
+            text-align: center;
+        }
+        .linked a{
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        .linked a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Kunjungan.</h1>
+        <p class="sub-heading">Kami sangat menghargai setiap kunjungan yang Anda lakukan, ini juga dapat membantu kami bagaimana feedback tersebut bisa di terima dengan baik.</p>
+        <ul id="analytics-list">
+            </ul>
+        <div id="last-updated" class="last-updated"></div>
+        <div>
+            <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 20px;">Terima kasih telah mengunjungi website kami!</p>
+            <div class="linked">
+                <a href="index.html">Kalkulator Componen</a>
+                <a href="riwayat.html">Riwayat Input Componen</a>
+                <a href="aboutme.html">About Me</a>
+                <a href="analisa.html">Kunjungan</a>
+                <a href="catatan.html">Catatan</a>
+            </div>
+        </div>
+         <footer>
+            <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 20px;">&copy; 2025 MekaKalku. All rights reserved.</p>
+            <p style="font-size: 12px; color: #aaa; text-align: center; ">Made with ❤️ by <a href="https://www.instagram.com/rezacristiansilalahi?igsh=MXJ3ZnFtYmk4MmJqbA==" target="_blank" style="color: #00d4ff;">Ckyandaa2</a></p>
+        </footer>
+    </div>
+    
+
+    <script>
+       
+        function updateAnalyticsData() {
+         
+            const visitData = JSON.parse(localStorage.getItem('myWebsiteAnalytics')) || {};
+            const analyticsList = document.getElementById('analytics-list');
+            
+           
+            analyticsList.innerHTML = '';
+
+          
+            if (Object.keys(visitData).length === 0) {
+                const listItem = document.createElement('li');
+                listItem.textContent = "Belum ada data kunjungan yang tersimpan.";
+                analyticsList.appendChild(listItem);
+            } else {
+                for (const page in visitData) {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `Anda mengunjungi ( ${page} ) sebanyak <span>${visitData[page]} kali</span>`;
+                    analyticsList.appendChild(listItem);
+                }
+            }
+
+            const lastUpdatedElement = document.getElementById('last-updated');
+            lastUpdatedElement.textContent = `Terakhir diperbarui: ${new Date().toLocaleTimeString()}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateAnalyticsData);
+
+        setInterval(updateAnalyticsData, 2000);
+    </script>
+</body>
+</html>

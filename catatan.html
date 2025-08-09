@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Catatan Saya</title>
+     <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png">
+    <style>
+                /* Impor font dari Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        /* Gaya dasar untuk body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2d, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animasi gradasi warna latar belakang */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Gaya untuk area utama aplikasi */
+        .app {
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-areas:
+                "header"
+                "input"
+                "notes";
+            gap: 30px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Gaya header dengan efek glassmorphism */
+        header {
+            grid-area: header;
+            text-align: center;
+            margin-bottom: 0;
+            font-size: 2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        /* Gaya untuk area input catatan */
+        .note-input-container {
+            grid-area: input;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input#note-title,
+        textarea#note-text {
+            width: 100%;
+            border: none;
+            background: rgba(0, 0, 0, 0.15); /* Warna dop transparan */
+            color: #ffffff;
+            font-size: 1em;
+            padding: 15px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        input#note-title::placeholder,
+        textarea#note-text::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input#note-title:focus,
+        textarea#note-text:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        input#note-title {
+            font-weight: 600;
+        }
+
+        textarea#note-text {
+            resize: vertical;
+        }
+
+        button#add-note-btn {
+            align-self: flex-end;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85)); /* Gradien emas */
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(6, 71, 150, 0.85);
+        }
+
+        button#add-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(8, 102, 202, 0.85);
+        }
+        
+        /* Gaya untuk grid catatan */
+        .notes-grid {
+            grid-area: notes;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        /* Gaya untuk setiap kartu catatan dengan efek glassmorphism */
+        .note-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            word-wrap: break-word;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .note-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .note-card-title {
+            font-weight: 600;
+            font-size: 1.2em;
+            /* background: linear-gradient(135deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85)); */
+            color: #FFD700;
+            margin: 0;
+        }
+
+        .note-card-text {
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Gaya scrollbar khusus untuk efek modern */
+        .note-card-text::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .note-card-text::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .note-card-text::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .note-card-date {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: auto;
+        }
+
+        .note-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: none;
+            gap: 5px;
+        }
+
+        .note-card:hover .note-actions {
+            display: flex;
+        }
+        
+        .note-actions button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            color: #ffffff;
+            font-weight: 600;
+            opacity: 0.8;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .note-actions button:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .delete-note-btn {
+            background-color: #ea4335;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .delete-note-btn:hover {
+            background-color: #d93025;
+        }
+        
+        /* Gaya Modal Pop-up */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(31, 38, 135, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.15);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content textarea {
+            resize: vertical;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            transition: transform 0.2s;
+        }
+
+        #save-modal-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+        }
+
+        #cancel-modal-btn {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+        
+        #save-modal-btn:hover,
+        #cancel-modal-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Media Queries untuk Responsif */
+        @media (max-width: 768px) {
+            .app {
+                padding: 10px;
+            }
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+        <div class="note-input-container">
+            <input id="note-title" type="text" placeholder="Judul catatan..." maxlength="150">
+            <textarea id="note-text" placeholder="Tulis catatan baru..." rows="3" maxlength="5000"></textarea>
+            <button id="add-note-btn">Tambahkan Catatan</button>
+            <p style="font-size: 12px; color: #aaa; text-align: center; ">Termasuk<a href="aboutme.html" target="_blank" style="color: #00d4ff;"> MekaKalku</a></p>
+        </div>
+        <div class="notes-grid" id="notes-grid">
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <input id="modal-title" type="text" placeholder="Judul catatan...">
+            <textarea id="modal-text" placeholder="Isi catatan..."></textarea>
+            <div class="modal-buttons">
+                <button id="save-modal-btn">Simpan</button>
+                <button id="cancel-modal-btn">Batal</button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const noteTitleInput = document.getElementById('note-title');
+            const noteTextarea = document.getElementById('note-text');
+            const addNoteBtn = document.getElementById('add-note-btn');
+            const notesGrid = document.getElementById('notes-grid');
+    
+            const modal = document.getElementById('edit-modal');
+            const modalTitleInput = document.getElementById('modal-title');
+            const modalTextarea = document.getElementById('modal-text');
+            const saveModalBtn = document.getElementById('save-modal-btn');
+            const cancelModalBtn = document.getElementById('cancel-modal-btn');
+    
+            // Batasan karakter dan jumlah catatan
+            const MAX_TITLE_LENGTH = 150;
+            const MAX_CONTENT_LENGTH = 5000;
+            const MAX_NOTES = 3;
+            let currentEditIndex = null;
+    
+            function loadNotes() {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+                notesGrid.innerHTML = '';
+    
+                notes.forEach((note, index) => {
+                    const noteCard = document.createElement('div');
+                    noteCard.className = 'note-card';
+                    noteCard.dataset.index = index;
+                    noteCard.addEventListener('click', () => showEditModal(index));
+    
+                    const noteTitle = document.createElement('h3');
+                    noteTitle.className = 'note-card-title';
+                    noteTitle.textContent = note.title;
+    
+                    const noteText = document.createElement('p');
+                    noteText.className = 'note-card-text';
+                    noteText.textContent = note.content;
+    
+                    const noteDate = document.createElement('span');
+                    noteDate.className = 'note-card-date';
+                    noteDate.textContent = `Dibuat pada: ${new Date(note.date).toLocaleString()}`;
+                    
+                    const noteActions = document.createElement('div');
+                    noteActions.className = 'note-actions';
+    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-note-btn';
+                    deleteBtn.textContent = 'Hapus';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteNote(index);
+                    });
+    
+                    noteActions.appendChild(deleteBtn);
+                    
+                    noteCard.appendChild(noteTitle);
+                    noteCard.appendChild(noteText);
+                    noteCard.appendChild(noteDate);
+                    noteCard.appendChild(noteActions);
+                    notesGrid.appendChild(noteCard);
+                });
+            }
+    
+            addNoteBtn.addEventListener('click', () => {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    
+                if (notes.length >= MAX_NOTES) {
+                    alert(`${MAX_NOTES} Udah cukup lah ya, hapus aja 1`);
+                    return;
+                }
+    
+                const title = noteTitleInput.value.trim();
+                const content = noteTextarea.value.trim();
+    
+                if (title.length > MAX_TITLE_LENGTH) {
+                    alert(`Judul catatan tidak boleh lebih dari ${MAX_TITLE_LENGTH} karakter!`);
+                    return;
+                }
+                if (content.length > MAX_CONTENT_LENGTH) {
+                    alert(`Isi catatan tidak boleh lebih dari ${MAX_CONTENT_LENGTH} karakter!`);
+                    return;
+                }
+    
+                if (title || content) {
+                    const newNote = {
+                        title: title || '(Tanpa Judul)',
+                        content: content,
+                        date: new Date().toISOString()
+                    };
+                    notes.push(newNote);
+                    localStorage.setItem('notes', JSON.stringify(notes));
+                    loadNotes();
+                    noteTitleInput.value = '';
+                    noteTextarea.value = '';
+                }
+            });
+    
+            // Fungsi untuk menampilkan modal edit
+            function showEditModal(index) {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+                const currentNote = notes[index];
+                
+                modalTitleInput.value = currentNote.title;
+                modalTextarea.value = currentNote.content;
+                
+                currentEditIndex = index;
+                modal.style.display = 'flex';
+            }
+            
+            // Fungsi untuk menyimpan hasil edit dari modal
+            saveModalBtn.addEventListener('click', () => {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+                const editedTitle = modalTitleInput.value.trim();
+                const editedContent = modalTextarea.value.trim();
+    
+                if (editedTitle.length > MAX_TITLE_LENGTH) {
+                    alert(`Judul catatan tidak boleh lebih dari ${MAX_TITLE_LENGTH} karakter!`);
+                    return;
+                }
+                if (editedContent.length > MAX_CONTENT_LENGTH) {
+                    alert(`Isi catatan tidak boleh lebih dari ${MAX_CONTENT_LENGTH} karakter!`);
+                    return;
+                }
+                
+                notes[currentEditIndex].title = editedTitle || '(Tanpa Judul)';
+                notes[currentEditIndex].content = editedContent;
+                
+                localStorage.setItem('notes', JSON.stringify(notes));
+                loadNotes();
+                modal.style.display = 'none';
+            });
+            
+            // Fungsi untuk membatalkan edit dan menutup modal
+            cancelModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+    
+            // Fungsi untuk menghapus catatan
+            function deleteNote(index) {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+                notes.splice(index, 1);
+                localStorage.setItem('notes', JSON.stringify(notes));
+                loadNotes();
+            }
+    
+            loadNotes();
+        });
+         // From analisa
+            document.addEventListener('DOMContentLoaded', (event) => {
+            const pageName = window.location.pathname.split('/').pop();
+            
+            // Buat kunci unik untuk sesi ini, misal: "visited_index.html"
+            const sessionKey = `visited_${pageName}`;
+
+            // Periksa apakah pengunjung sudah pernah dicatat di sesi ini
+            if (!sessionStorage.getItem(sessionKey)) {
+                // Jika belum ada di sessionStorage, catat sebagai kunjungan baru
+                let visitData = JSON.parse(localStorage.getItem('myWebsiteAnalytics')) || {};
+                
+                if (visitData[pageName]) {
+                    visitData[pageName] += 1;
+                } else {
+                    visitData[pageName] = 1;
+                }
+                
+                localStorage.setItem('myWebsiteAnalytics', JSON.stringify(visitData));
+                
+                console.log(`Kunjungan ke halaman "${pageName}" tercatat.`);
+
+                // Tambahkan penanda ke sessionStorage agar tidak dihitung lagi di sesi ini
+                sessionStorage.setItem(sessionKey, 'true');
+            } else {
+                console.log(`Kunjungan ke halaman "${pageName}" sudah tercatat di sesi ini.`);
+            }
+        });
+    </script>
+</body>
+</html>
