@@ -29,6 +29,14 @@
       text-align: center;
     }
 
+    .MekaLakuText {
+      background: linear-gradient(135deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
     .card {
       background: rgba(255, 255, 255, 0.15);
       padding: 30px;
@@ -292,6 +300,29 @@ th {
         0% { transform: scale(0.8); opacity: 0; }
         100% { transform: scale(1); opacity: 1; }
       }
+      
+    .MekaKalku {
+      display: block;
+      margin: 30px auto;
+      max-width: 280px;
+      width: 90%;
+      border-radius: 18px;
+      box-shadow:
+        0 8px 24px rgba(8, 102, 202, 0.3),
+        0 0 12px rgba(6, 71, 150, 0.4);
+      background: linear-gradient(135deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85));
+      padding: 12px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: default;
+      user-select: none;
+    }
+
+    .MekaKalku:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow:
+        0 12px 32px rgba(8, 102, 202, 0.85),
+        0 0 12px rgba(6, 71, 150, 0.6);
+    }
 
     @media (max-width: 600px) {
       body {
@@ -310,13 +341,12 @@ th {
 </head>
 <body>
   <div class="card">
-    <h1>Riwayat Input Komponen</h1>
+    <h1>Riwayat <span class="MekaLakuText">MekaKalku</span></h1>
     <div class="table-container" id="riwayatContainer"></div>
     <div class="button-group">
       <button id="hapusBtn" class="delete-btn" onclick="showPopup()">Hapus yang dipilih</button>
       <button onclick="hapusSemua()">Hapus Semua Riwayat</button>
       <button onclick="cetakPDF()">Cetak Hasil</button>
-
     </div>
     <ul style="display: flex; gap: 16px; list-style: none; padding: 0; margin: 20px 0 0 0; justify-content: center;">
       <li><a href="index.html" style="text-decoration: none; color: #007BFF;">Kalkulator Komponen</a></li>
@@ -341,16 +371,15 @@ th {
     </div>
   </div>
 
-
   <script>
     let dataRiwayat = JSON.parse(localStorage.getItem('riwayatComponent')) || [];
     const container = document.getElementById('riwayatContainer');
 
     function renderTable() {
-      if (dataRiwayat.length === 0) {
-        container.innerHTML = '<p style="text-align:center">Tidak ada riwayat yang tersimpan.</p>';
-        return;
-      }
+        if (dataRiwayat.length === 0) {
+            container.innerHTML = '<p style="text-align:center">Kamu belum ada memasukan riwayat apapun, silakan <a style="text-decoration: none; color: #007BFF;" href="index.html">Tambahkan</a> terlebih dahulu.</p><img class="MekaKalku" style="204MekaLaku" src="https://i.postimg.cc/v8rRZPfs/204-Mekakalku.png" draggable="false" alt="">';
+            return;
+    }
 
       let totalKomponen = 0;
       let totalHargaAsli = 0;
@@ -538,7 +567,9 @@ th {
     }
   });
 }
-
+    document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
     renderTable();
   </script>
   
