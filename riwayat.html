@@ -570,6 +570,38 @@ th {
     document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
   });
+
+
+
+    // From analisa
+     document.addEventListener('DOMContentLoaded', (event) => {
+        const pageName = window.location.pathname.split('/').pop();
+        
+        // Buat kunci unik untuk sesi ini, misal: "visited_index.html"
+        const sessionKey = `visited_${pageName}`;
+
+        // Periksa apakah pengunjung sudah pernah dicatat di sesi ini
+        if (!sessionStorage.getItem(sessionKey)) {
+            // Jika belum ada di sessionStorage, catat sebagai kunjungan baru
+            let visitData = JSON.parse(localStorage.getItem('myWebsiteAnalytics')) || {};
+            
+            if (visitData[pageName]) {
+                visitData[pageName] += 1;
+            } else {
+                visitData[pageName] = 1;
+            }
+            
+            localStorage.setItem('myWebsiteAnalytics', JSON.stringify(visitData));
+            
+            console.log(`Kunjungan ke halaman "${pageName}" tercatat.`);
+
+            // Tambahkan penanda ke sessionStorage agar tidak dihitung lagi di sesi ini
+            sessionStorage.setItem(sessionKey, 'true');
+        } else {
+            console.log(`Kunjungan ke halaman "${pageName}" sudah tercatat di sesi ini.`);
+        }
+    });
+
     renderTable();
   </script>
   
