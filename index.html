@@ -92,8 +92,30 @@
         .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    function hitungKeuntungan(jumlahComponent, baseKeuntungan) {
-      return jumlahComponent > 190 ? baseKeuntungan * 2 : baseKeuntungan;
+    function hitungKeuntungan(jumlahComponent, baseKeuntungan = 50, hargaPerComponent = 0.60) {
+        const batasBonus = 142;
+        const persentaseBonus = 0.60;
+        const maxKeuntungan = 500;
+
+        
+        const modal = jumlahComponent * hargaPerComponent;
+
+
+        let bonus = 0;
+        if (jumlahComponent > batasBonus) {
+          const modalKelebihan = (jumlahComponent - batasBonus) * hargaPerComponent;
+          bonus = modalKelebihan * persentaseBonus;
+        }
+
+        
+        let totalKeuntungan = baseKeuntungan + bonus;
+
+        
+        if (totalKeuntungan > maxKeuntungan) {
+          totalKeuntungan = maxKeuntungan;
+        }
+
+        return parseFloat(totalKeuntungan.toFixed(2));
     }
 
     function update() {
@@ -166,4 +188,5 @@
 
 </body>
 </html>
+
 
