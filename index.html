@@ -209,24 +209,22 @@
     function hitungKeuntungan(jumlahComponent, baseKeuntungan = 50, hargaPerComponent = 0.60) {
         const batasBonus = 142;
         const persentaseBonus = 0.60;
-        const maxKeuntungan = 500;
+        const maxKeuntungan = Number.POSITIVE_INFINITY; // Mengubah nilainya menjadi tak terbatas atau custom
 
-        
         const modal = jumlahComponent * hargaPerComponent;
-
 
         let bonus = 0;
         if (jumlahComponent > batasBonus) {
-          const modalKelebihan = (jumlahComponent - batasBonus) * hargaPerComponent;
-          bonus = modalKelebihan * persentaseBonus;
+            const modalKelebihan = (jumlahComponent - batasBonus) * hargaPerComponent;
+            bonus = modalKelebihan * persentaseBonus;
         }
 
-        
         let totalKeuntungan = baseKeuntungan + bonus;
 
-        
+        // Karena totalKeuntungan tidak akan pernah lebih besar dari tak terbatas,
+        // kode di bawah ini tidak akan pernah dieksekusi, ini hanya untuk custom
         if (totalKeuntungan > maxKeuntungan) {
-          totalKeuntungan = maxKeuntungan;
+            totalKeuntungan = maxKeuntungan;
         }
 
         return parseFloat(totalKeuntungan.toFixed(2));
@@ -354,3 +352,4 @@
 
 </body>
 </html>
+
