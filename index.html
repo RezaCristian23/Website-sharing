@@ -147,6 +147,46 @@
       color: transparent;
       -webkit-text-fill-color: transparent;
     }
+      /* fitur pop up foto */
+      #show-photo-button {
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+      }
+
+      #photo-popup {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          transition: opacity 0.3s ease-in-out;
+      }
+
+      #photo-popup.hidden {
+          display: none;
+      }
+
+      #popup-image {
+          max-width: 90%;
+          max-height: 90%;
+          border-radius: 8px;
+      }
+
+      #close-button {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          color: white;
+          font-size: 40px;
+          font-weight: bold;
+          cursor: pointer;
+      }
     @media (max-width: 600px) {
       .title { font-size: 22px; }
       .container { padding: 30px 25px; }
@@ -183,11 +223,18 @@
     <div class="result"><span class="label">Harga Jual:</span> <span id="hargaJual">$0,00</span></div>
 
     <span class="dashboard" onclick="window.open('riwayat.html', '_blank')">Lihat riwayat Kalkulator</span>
+    <span class="dashboard" id="show-photo-button">Foto kaleng cat</span>
     <a href="aboutme.html" target="_blank" class="link-riwayat">About me, bingung?</a>
-            <footer>
+     
+        <footer>
             <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 20px;">&copy; 2025 MekaKalku. All rights reserved.</p>
             <p style="font-size: 12px; color: #aaa; text-align: center; ">Made with ❤️ by <a href="https://www.instagram.com/rezacristiansilalahi?igsh=MXJ3ZnFtYmk4MmJqbA==" target="_blank" style="color: #00d4ff;">Ckyandaa2</a></p>
         </footer>
+  </div>
+  <!-- fitur pop up foto -->
+  <div id="photo-popup" class="hidden">
+        <span id="close-button">&times;</span>
+        <img id="popup-image" src="https://i.postimg.cc/ncKW8KSL/tO2l04l.png" alt="Contoh Foto">
   </div>
 
   <script>
@@ -209,7 +256,7 @@
     function hitungKeuntungan(jumlahComponent, baseKeuntungan = 50, hargaPerComponent = 0.60) {
         const batasBonus = 142;
         const persentaseBonus = 0.60;
-        const maxKeuntungan = Number.POSITIVE_INFINITY; // Mengubah nilainya menjadi tak terbatas atau custom
+        const maxKeuntungan = Number.POSITIVE_INFINITY; // Mengubah nilainya menjadi tak terbatas
 
         const modal = jumlahComponent * hargaPerComponent;
 
@@ -222,7 +269,7 @@
         let totalKeuntungan = baseKeuntungan + bonus;
 
         // Karena totalKeuntungan tidak akan pernah lebih besar dari tak terbatas,
-        // kode di bawah ini tidak akan pernah dieksekusi, ini hanya untuk custom
+        // kode di bawah ini tidak akan pernah dieksekusi.
         if (totalKeuntungan > maxKeuntungan) {
             totalKeuntungan = maxKeuntungan;
         }
@@ -347,9 +394,35 @@
             console.log(`Kunjungan ke halaman "${pageName}" sudah tercatat di sesi ini.`);
         }
     });
+
+
+
+    // fitur pop-up foto
+    document.addEventListener('DOMContentLoaded', () => {
+    const showButton = document.getElementById('show-photo-button');
+    const popup = document.getElementById('photo-popup');
+    const closeButton = document.getElementById('close-button');
+
+    // Menampilkan pop-up saat tombol "Tampilkan Foto" diklik
+    showButton.addEventListener('click', () => {
+        popup.classList.remove('hidden');
+    });
+
+    // Menyembunyikan pop-up saat tombol 'x' diklik
+    closeButton.addEventListener('click', () => {
+        popup.classList.add('hidden');
+    });
+
+    // Menyembunyikan pop-up saat mengklik di luar gambar
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) {
+            popup.classList.add('hidden');
+        }
+    });
+});
+
     window.onload = update;
   </script>
 
 </body>
 </html>
-
