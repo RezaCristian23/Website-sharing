@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MekaKalku Dashboard</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+ <style>
+  /* === RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  color: #000000;
+  background-color: #f0f4ff;
+}
+
+/* === DARK MODE STYLES === */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .sidebar {
+  background: #1e1e1e;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .sidebar-menu button {
+  color: #a0a0a0;
+}
+
+.dark-mode .sidebar-menu button:hover {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.dark-mode .sidebar-menu button.active {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.dark-mode .header-content h1 {
+  color: #f0f0f0;
+}
+
+.dark-mode .header-avatar span {
+  color: #a0a0a0;
+}
+
+.dark-mode .card {
+  background: #1e1e1e;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .card-title {
+  color: #f0f0f0;
+  border-bottom: 2px solid #5a75b7;
+}
+
+.dark-mode .placeholder-text {
+  color: #a0a0a0;
+}
+
+.dark-mode .setting-label {
+  color: #e0e0e0;
+}
+
+.dark-mode .setting-select {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+.dark-mode .setting-select:focus {
+  border-color: #5a75b7;
+  box-shadow: 0 0 0 2px rgba(90, 117, 183, 0.2);
+}
+
+.dark-mode .switch input:checked + .slider {
+  background-color: #5a75b7;
+}
+
+/* === LAYOUT UTAMA === */
+.dashboard-container {
+  display: flex;
+}
+
+/* === SIDEBAR KECIL (DESKTOP) === */
+.sidebar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  height: calc(100vh - 40px);
+  width: 90px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  z-index: 100;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* MENU */
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-menu button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #929292;
+  font-size: 0.85rem;
+  padding: 10px;
+  transition: 0.3s;
+  border-radius: 15px;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-menu button i {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.sidebar-menu button span {
+  display: none;
+}
+
+.sidebar-menu button:hover {
+  background-color: #e8ecf4;
+  color: #3b5998;
+}
+
+.sidebar-menu button.active {
+  background-color: #e0ecff;
+  color: #3b5998;
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 130px;
+  padding: 40px;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.header-avatar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-avatar span {
+  font-weight: 600;
+  color: #555;
+}
+
+.header-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  display: none;
+}
+
+.page-section.active {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3b5998;
+}
+
+.placeholder-text {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Pengaturan page */
+/* Styling for settings page */
+.settings-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.setting-select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.setting-select:focus {
+  outline: none;
+  border-color: #3b5998;
+  box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.2);
+}
+
+/* Toggle Switch Styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #3b5998;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 28px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Logout Button */
+.logout-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.logout-button:hover {
+  background-color: #e63e41;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.setting-action-link,
+.setting-link {
+  text-decoration: none;
+  color: #3b5998;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.setting-action-link:hover,
+.setting-link:hover {
+  color: #2b4578;
+  text-decoration: underline;
+}
+
+.setting-info {
+  color: #666;
+  font-weight: 500;
+}
+
+/* Profil Page Specific Styles */
+.profile-grid {
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.profile-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-avatar-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 20px 0;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f0f4ff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.edit-avatar-btn:hover {
+  background-color: #2b4578;
+}
+
+.profile-details {
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.detail-value {
+  color: #333;
+}
+
+.edit-profile-btn,
+.view-history-btn {
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.edit-profile-btn:hover,
+.view-history-btn:hover {
+  background-color: #2b4578;
+}
+
+/* Aktivitas Terkini Styles */
+.activity-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-list {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.activity-icon {
+  color: #3b5998;
+  font-size: 1.2rem;
+  width: 30px;
+  text-align: center;
+}
+
+.activity-text {
+  flex-grow: 1;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Dark mode compatibility */
+.dark-mode .detail-label,
+.dark-mode .detail-value {
+  color: #e0e0e0;
+}
+
+.dark-mode .detail-label {
+  color: #a0a0a0;
+}
+
+.dark-mode .detail-item {
+  border-color: #333;
+}
+
+.dark-mode .activity-item {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .activity-text {
+  color: #e0e0e0;
+}
+
+.dark-mode .activity-time {
+  color: #a0a0a0;
+}
+
+/* Dashboard Specific Styles */
+
+/* Dashboard Specific Styles */
+.dashboard-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.card-title-small {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.stat-growth {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.stat-growth.up {
+  color: #28a745;
+}
+
+.stat-growth.down {
+  color: #dc3545;
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-placeholder {
+  width: 100%;
+  padding-top: 20px;
+  text-align: center;
+  color: #999;
+}
+
+.chart-content {
+  margin-top: 15px;
+}
+
+.recent-activity-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+/* Update CSS for recent activity list */
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.recent-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.recent-list li:last-child {
+  border-bottom: none;
+}
+
+.recent-icon {
+  font-size: 1.5rem;
+  color: #3b5998;
+  margin-right: 15px;
+  width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Kontainer baru untuk teks dan detail */
+.recent-text-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-text {
+  font-weight: 600;
+  color: #444;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.recent-details {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 5px;
+}
+
+.recent-time {
+  font-size: 0.8rem;
+  color: #888;
+  margin-left: 15px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* Dark mode compatibility */
+.dark-mode .recent-text {
+  color: #f0f0f0;
+}
+
+.dark-mode .recent-details {
+  color: #a0a0a0;
+}
+
+.dark-mode .recent-time {
+  color: #a0a0a0;
+}
+
+.dark-mode .recent-list li {
+  border-color: #333;
+}
+
+.recent-icon {
+  font-size: 1.5rem;
+  color: #3b5998;
+  margin-right: 15px;
+  width: 30px;
+  text-align: center;
+}
+
+.recent-text {
+  flex-grow: 1;
+  font-weight: 600;
+  color: #444;
+}
+
+.recent-details {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 5px;
+}
+
+.recent-time {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Dark mode compatibility */
+.dark-mode .stat-value {
+  color: #f0f0f0;
+}
+
+.dark-mode .card-title-small {
+  color: #a0a0a0;
+}
+
+.dark-mode .recent-text {
+  color: #f0f0f0;
+}
+
+.dark-mode .recent-details {
+  color: #a0a0a0;
+}
+
+.dark-mode .recent-time {
+  color: #a0a0a0;
+}
+
+.dark-mode .recent-list li {
+  border-color: #333;
+}
+
+/* Riwayat Page Specific Styles */
+.history-table-container {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.history-table th {
+  background-color: #f2f2f2;
+  color: #555;
+  font-weight: 600;
+}
+
+.history-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.empty-history-message {
+  text-align: center;
+  color: #888;
+  padding: 20px;
+}
+
+.clear-history-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.clear-history-btn:hover {
+  background-color: #c82333;
+}
+
+/* Dark mode compatibility for history page */
+.dark-mode .history-table th {
+  background-color: #2a2a2a;
+  color: #a0a0a0;
+}
+
+.dark-mode .history-table td {
+  color: #e0e0e0;
+  border-color: #333;
+}
+
+.dark-mode .history-table tbody tr:hover {
+  background-color: #333333;
+}
+
+.dark-mode .empty-history-message {
+  color: #a0a0a0;
+}
+
+/* === WEBSITE PAGE SPECIFIC STYLES === */
+.hero-card {
+  text-align: center;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, #3b5998, #5a75b7);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hero-card .card-title-hero {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-text {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.call-to-action-btn {
+  background-color: #fff;
+  color: #3b5998;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.call-to-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.call-to-action-btn i {
+  margin-right: 8px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Dark mode compatibility for section title */
+.dark-mode .section-title {
+  color: #f0f0f0;
+}
+
+/* Feature Cards */
+.feature-card {
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: #3b5998;
+  margin-bottom: 15px;
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.feature-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Dark mode compatibility for features */
+.dark-mode .feature-title {
+  color: #f0f0f0;
+}
+
+.dark-mode .feature-description {
+  color: #a0a0a0;
+}
+
+/* Pricing Cards */
+.pricing-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.pricing-card {
+  text-align: center;
+  position: relative;
+  padding-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card.recommended {
+  border: 3px solid #3b5998;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(59, 89, 152, 0.2);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3b5998;
+  margin-bottom: 10px;
+}
+
+.pricing-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.pricing-per {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #888;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing-features li {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pricing-features li i {
+  color: #28a745;
+  margin-right: 10px;
+}
+
+.select-plan-btn {
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.select-plan-btn:hover {
+  background-color: #2b4578;
+}
+
+.tag {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ffc107;
+  color: #212529;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode compatibility for pricing */
+.dark-mode .pricing-title {
+  color: #5a75b7;
+}
+
+.dark-mode .pricing-price {
+  color: #f0f0f0;
+}
+
+.dark-mode .pricing-per {
+  color: #a0a0a0;
+}
+
+.dark-mode .pricing-features li {
+  color: #e0e0e0;
+}
+
+.dark-mode .pricing-card.recommended {
+  border-color: #5a75b7;
+  box-shadow: 0 10px 20px rgba(90, 117, 183, 0.2);
+}
+
+/* === WEBSITE PAGE (JGRP VIP) SPECIFIC STYLES === */
+.hero-card {
+  text-align: center;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, #0f4c75, #3282b8);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hero-card .card-title-hero {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-text {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.call-to-action-btn {
+  background-color: #fff;
+  color: #0f4c75;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.call-to-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.call-to-action-btn i {
+  margin-right: 8px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Dark mode compatibility for section title */
+.dark-mode .section-title {
+  color: #f0f0f0;
+}
+
+/* Pricing Cards */
+.pricing-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.pricing-card {
+  text-align: center;
+  position: relative;
+  padding-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card.recommended {
+  border: 3px solid #3282b8;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(50, 130, 184, 0.2);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f4c75;
+  margin-bottom: 10px;
+}
+
+.pricing-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.pricing-per {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #888;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing-features li {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pricing-features li i {
+  color: #4CAF50;
+  margin-right: 10px;
+}
+
+.select-plan-btn {
+  background-color: #0f4c75;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.select-plan-btn:hover {
+  background-color: #0d3b5b;
+}
+
+.tag {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ffc107;
+  color: #212529;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode compatibility for pricing */
+.dark-mode .pricing-title {
+  color: #3282b8;
+}
+
+.dark-mode .pricing-price {
+  color: #f0f0f0;
+}
+
+.dark-mode .pricing-per {
+  color: #a0a0a0;
+}
+
+.dark-mode .pricing-features li {
+  color: #e0e0e0;
+}
+
+.dark-mode .pricing-card.recommended {
+  border-color: #3282b8;
+  box-shadow: 0 10px 20px rgba(50, 130, 184, 0.2);
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-avatar {
+    align-self: flex-end;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === HOME PAGE SPECIFIC STYLES === */
+.home-hero-card {
+  text-align: center;
+  padding: 60px 30px;
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.home-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      135deg,
+      rgba(26, 38, 59, 0.9),
+      rgba(59, 89, 152, 0.9)
+    ), url('https://images.unsplash.com/photo-1534796529329-b6957fe2b992?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transition: transform 0.5s ease;
+}
+
+.home-hero-card:hover::before {
+  transform: scale(1.05);
+}
+
+.home-hero-card .card-title-hero {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.home-hero-card .hero-text {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 15px 30px;
+  border-radius: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.primary-btn {
+  background-color: #fff;
+  color: #3b5998;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+/* Service Cards */
+.service-card {
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  border-color: #3b5998;
+}
+
+.service-icon {
+  font-size: 3.5rem;
+  color: #3b5998;
+  margin-bottom: 15px;
+}
+
+.service-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.service-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.service-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #3b5998;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.service-link:hover {
+  color: #5a75b7;
+}
+
+/* Why Choose Us Section */
+.why-choose-us-card {
+  background: #f0f4ff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.feature-item {
+  text-align: center;
+}
+
+.feature-icon-lg {
+  font-size: 3.5rem;
+  color: #5a75b7;
+  margin-bottom: 15px;
+}
+
+.feature-title-lg {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Testimonial Cards */
+.testimonial-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.testimonial-card {
+  text-align: left;
+}
+
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.testimonial-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.testimonial-rating {
+  color: #f39c12;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* === SPECIAL DASHBOARD CARD STYLES === */
+.special-dashboard-card {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  border: none;
+}
+
+.special-dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.special-dashboard-card .service-title,
+.special-dashboard-card .service-description,
+.special-dashboard-card .service-icon {
+  color: #fff;
+}
+
+.special-dashboard-card .service-link {
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.special-dashboard-card .service-link:hover {
+  color: #b0c2ff;
+  border-bottom-color: #b0c2ff;
+}
+
+.card-background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      135deg,
+      rgba(59, 89, 152, 0.9),
+      rgba(26, 38, 59, 0.9)
+    ), url('https://images.unsplash.com/photo-1534796529329-b6957fe2b992?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.service-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Dark Mode Compatibility */
+.dark-mode .home-hero-card::before {
+  background-image: linear-gradient(
+      135deg,
+      rgba(26, 38, 59, 0.9),
+      rgba(59, 89, 152, 0.9)
+    ), url('https://images.unsplash.com/photo-1534796529329-b6957fe2b992?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+.dark-mode .hero-btn.primary-btn {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.dark-mode .hero-btn.secondary-btn {
+  border-color: #a0a0a0;
+  color: #a0a0a0;
+}
+
+.dark-mode .service-icon,
+.dark-mode .service-link {
+  color: #5a75b7;
+}
+
+.dark-mode .service-card:hover {
+  border-color: #5a75b7;
+}
+
+.dark-mode .service-title {
+  color: #f0f0f0;
+}
+
+.dark-mode .service-description {
+  color: #a0a0a0;
+}
+
+.dark-mode .why-choose-us-card {
+  background: #1e1e1e;
+}
+
+.dark-mode .feature-icon-lg {
+  color: #5a75b7;
+}
+
+.dark-mode .feature-title-lg {
+  color: #f0f0f0;
+}
+
+.dark-mode .testimonial-name,
+.dark-mode .testimonial-text {
+  color: #e0e0e0;
+}
+
+.dark-mode .special-dashboard-card .card-background-overlay {
+  background-image: linear-gradient(
+      135deg,
+      rgba(43, 69, 120, 0.9),
+      rgba(15, 28, 45, 0.9)
+    ), url('https://i.postimg.cc/Qhc1kvp3/Logo-Mekakalku2.png');
+}
+
+/* === MAIN FOOTER STYLES === */
+.main-footer {
+  background-color: #333;
+  color: #f0f0f0;
+  padding: 60px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  width: 100%;
+  z-index: 50;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.footer-brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.footer-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.footer-section h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+  border-bottom: 2px solid #5a75b7;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  text-decoration: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #fff;
+}
+
+.footer-contact p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.footer-contact i {
+  margin-right: 10px;
+  color: #5a75b7;
+}
+
+.social-icons a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: #555;
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  background-color: #5a75b7;
+  transform: translateY(-5px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* === MEDIA QUERIES UNTUK LAYAR MOBILE === */
+@media (max-width: 768px) {
+  /* Main Layout */
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 20px;
+    /* Tambahkan padding bawah agar konten tidak tertutup sidebar */
+    padding-bottom: 80px;
+    margin-left: 0;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: auto;
+    width: 100%;
+    height: 70px;
+    border-radius: 0;
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.1);
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+    gap: 0;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .sidebar-menu {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .sidebar-menu li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sidebar-menu button {
+    width: 100%;
+    height: 50px;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .sidebar-menu button span {
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  /* Header Content */
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .header-content h1 {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .header-avatar {
+    gap: 10px;
+  }
+
+  .header-avatar span {
+    display: none;
+  }
+
+  /* General Cards */
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer for Mobile */
+  .main-footer {
+    padding: 40px 20px 20px;
+    z-index: 50;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    min-width: auto;
+  }
+
+  .footer-section h4 {
+    margin-bottom: 10px;
+  }
+
+  .footer-logo {
+    flex-direction: column;
+  }
+
+  .footer-logo img {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .footer-links ul {
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .footer-bottom {
+    text-align: center;
+  }
+
+  /* Dark mode for mobile sidebar */
+  .dark-mode .sidebar {
+    background-color: #1e1e1e;
+    border-top: 1px solid #2a2a2a;
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.4);
+  }
+}
+ </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://i.postimg.cc/cL4vd999/Logo-Mekakalku2.png" alt="MekaKalku Logo" />
+      </div>
+      <ul class="sidebar-menu">
+        <li><button data-page="kalkulator" class="active"><i class="fas fa-home"></i><span>MekaKalku</span></button></li>
+        <li><button data-page="riwayat"><i class="fas fa-history"></i><span>Riwayat</span></button></li>
+        <li><button data-page="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></button></li>
+         <li><button data-page="website"><i class="fas fa-donate"></i><span>Website</span></button></li>
+        <li><button data-page="profil"><i class="fas fa-user-circle"></i><span>Profil</span></button></li>
+        <li><button data-page="pengaturan"><i class="fas fa-cog"></i><span>Pengaturan</span></button></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div id="kalkulator-page" class="page-section active">
+    <div class="card home-hero-card">
+        <h2 class="card-title-hero">Selamat Datang di MekaKalku!</h2>
+        <p class="hero-text">
+            Platform serba ada untuk kebutuhan kalkulasi, manajemen data, dan pengembangan website Anda.
+        </p>
+        <div class="hero-buttons">
+            <a href="#" data-page="kalkulator" class="hero-btn primary-btn"><i class="fas fa-calculator"></i> Mulai Kalkulasi</a>
+            <a href="#" data-page="website" class="hero-btn secondary-btn"><i class="fas fa-globe"></i> Buat Website</a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Layanan Utama Kami</h2>
+    <div class="card-grid">
+        <div class="card service-card">
+            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="service-title">Dashboard Analisis</h3>
+            <p class="service-description">
+                Pantau semua riwayat dan aktivitas Anda dalam satu dasbor yang interaktif dan mudah dipahami.
+            </p>
+            <a href="#" class="service-link" data-page="dashboard">Lihat Selengkapnya <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="card service-card">
+            <div class="service-icon"><i class="fas fa-history"></i></div>
+            <h3 class="service-title">Riwayat Akurat</h3>
+            <p class="service-description">
+                Simpan dan akses kembali semua riwayat kalkulasi Anda kapan saja, memastikan data Anda selalu aman.
+            </p>
+            <a href="#" class="service-link" data-page="riwayat">Cek Riwayat <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="card service-card">
+            <div class="service-icon"><i class="fas fa-user-circle"></i></div>
+            <h3 class="service-title">Profil Pengguna</h3>
+            <p class="service-description">
+                Kelola informasi pribadi dan preferensi Anda dengan mudah untuk pengalaman yang lebih personal.
+            </p>
+            <a href="#" class="service-link" data-page="profil">Kelola Profil <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Mengapa Memilih MekaKalku?</h2>
+    <div class="card why-choose-us-card">
+        <div class="card-grid">
+            <div class="feature-item">
+                <div class="feature-icon-lg"><i class="fas fa-shield-alt"></i></div>
+                <h4 class="feature-title-lg">Keamanan Terjamin</h4>
+                <p class="feature-description">Data Anda terenkripsi dengan aman. Kami memprioritaskan privasi Anda di atas segalanya.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-lg"><i class="fas fa-cogs"></i></div>
+                <h4 class="feature-title-lg">Fitur Inovatif</h4>
+                <p class="feature-description">Kami terus mengembangkan fitur baru, termasuk alat berbasis AI, untuk mempermudah pekerjaan Anda.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-lg"><i class="fas fa-tachometer-alt"></i></div>
+                <h4 class="feature-title-lg">Performa Cepat</h4>
+                <p class="feature-description">Aplikasi kami dirancang untuk responsif dan cepat, memastikan pengalaman yang lancar.</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Apa Kata Mereka?</h2>
+    <div class="card-grid testimonial-grid">
+        <div class="card testimonial-card">
+            <div class="testimonial-header">
+                <img src="https://i.pravatar.cc/100?u=a" alt="Avatar" class="testimonial-avatar" />
+                <div class="testimonial-info">
+                    <span class="testimonial-name">Reza K.</span>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="testimonial-text">"Dashboard-nya sangat intuitif! Saya bisa memantau semua kalkulasi bisnis saya dengan mudah. Sangat membantu!"</p>
+        </div>
+        <div class="card testimonial-card">
+            <div class="testimonial-header">
+                <img src="https://i.pravatar.cc/100?u=b" alt="Avatar" class="testimonial-avatar" />
+                <div class="testimonial-info">
+                    <span class="testimonial-name">Dina W.</span>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="testimonial-text">"Suka sekali dengan fitur riwayat. Tidak perlu lagi mencatat hasil kalkulasi secara manual. Semua tersimpan otomatis!"</p>
+        </div>
+        <div class="card testimonial-card">
+            <div class="testimonial-header">
+                <img src="https://i.pravatar.cc/100?u=c" alt="Avatar" class="testimonial-avatar" />
+                <div class="testimonial-info">
+                    <span class="testimonial-name">Andi S.</span>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="testimonial-text">"Kalkulatornya cepat dan akurat. Saya sudah mencoba beberapa, dan ini yang terbaik. Tampilannya juga keren!"</p>
+        </div>
+    </div>
+</div>
+      
+  <div id="dashboard-page" class="page-section active">
+      <div class="header-content">
+          <h1>Dashboard Analisis</h1>
+          <div class="header-avatar">
+              <span>Halo, Reza</span>
+              <img src="https://i.pravatar.cc/100" alt="User Avatar" />
+          </div>
+      </div>
+      <div class="card-grid dashboard-grid">
+          <div class="card stat-card">
+              <h2 class="card-title-small">Total Keuntungan</h2>
+              <div class="stat-value" id="total-keuntungan">$0202020</div>
+              <p class="stat-growth up"><i class="fas fa-arrow-up"></i> +15% dari bulan lalu</p>
+          </div>
+          <div class="card stat-card">
+              <h2 class="card-title-small">Jumlah Component (bulan ini)</h2>
+              <div class="stat-value" id="jumlah-kalkulasi">257</div>
+              <p class="stat-growth down"><i class="fas fa-arrow-down"></i> -5% dari bulan lalu</p>
+          </div>
+          <div class="card stat-card">
+              <h2 class="card-title-small">Total Biaya</h2>
+              <div class="stat-value" id="total-biaya">$48.750,00</div>
+              <p class="stat-growth up"><i class="fas fa-arrow-up"></i> +10% dari bulan lalu</p>
+          </div>
+
+          <div class="card chart-card full-width">
+              <h2 class="card-title">Grafik Performa Bulanan</h2>
+              <div class="chart-placeholder">
+                  <p>Grafik Batang: Keuntungan & Biaya Pembelian component</p>
+                  <div class="chart-content">
+                      <svg width="100%" height="200" viewBox="0 0 100 200" preserveAspectRatio="none">
+                          <rect x="5" y="100" width="8" height="90" fill="#3b5998" rx="2"></rect>
+                          <rect x="15" y="120" width="8" height="70" fill="#5a75b7" rx="2"></rect>
+                          <rect x="25" y="80" width="8" height="110" fill="#3b5998" rx="2"></rect>
+                          <rect x="35" y="140" width="8" height="50" fill="#5a75b7" rx="2"></rect>
+                          <rect x="45" y="70" width="8" height="120" fill="#3b5998" rx="2"></rect>
+                          <rect x="55" y="100" width="8" height="90" fill="#5a75b7" rx="2"></rect>
+                          <rect x="65" y="60" width="8" height="130" fill="#3b5998" rx="2"></rect>
+                          <rect x="75" y="150" width="8" height="40" fill="#5a75b7" rx="2"></rect>
+                          <rect x="85" y="90" width="8" height="100" fill="#3b5998" rx="2"></rect>
+                      </svg>
+                  </div>
+              </div>
+          </div>
+
+          <div class="card recent-activity-card full-width">
+              <h2 class="card-title">Kalkulasi Terbaru</h2>
+              <ul class="recent-list">
+                  <li>
+                      <i class="fas fa-hammer recent-icon"></i>
+                      <div>
+                          <p class="recent-text">Pemesanan Workshop in MC</p>
+                          <span class="recent-details">Keuntungan: $6.000,00</span>
+                      </div>
+                      <span class="recent-time">2 jam lalu</span>
+                  </li>
+                  <li>
+                      <i class="fas fa-tools recent-icon"></i>
+                      <div>
+                          <p class="recent-text">Pemesanan Upgrade in MC</p>
+                          <span class="recent-details">Keuntungan: $1.250,00</span>
+                      </div>
+                      <span class="recent-time">1 hari lalu</span>
+                  </li>
+                  <li>
+                      <i class="fas fa-building recent-icon"></i>
+                      <div>
+                          <p class="recent-text">Pemesanan Jasa Builder</p>
+                          <span class="recent-details">Keuntungan: $4.200,00</span>
+                      </div>
+                      <span class="recent-time">3 hari lalu</span>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+      
+    <div id="riwayat-page" class="page-section">
+    <div class="header-content">
+        <h1>Riwayat Kalkulasi</h1>
+        <div class="header-avatar">
+            <span>Halo, Reza</span>
+            <img src="https://i.pravatar.cc/100" alt="User Avatar" />
+        </div>
+    </div>
+    <div class="card full-width">
+        <h2 class="card-title">Riwayat Kalkulasi Terbaru</h2>
+        <div class="history-table-container">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Waktu</th>
+                        <th>Total Komponen</th>
+                        <th>Harga Asli</th>
+                        <th>Keuntungan</th>
+                        <th>Harga Jual</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body">
+                    <tr>
+                        <td colspan="5" class="empty-history-message">
+                            Belum ada riwayat kalkulasi. Lakukan kalkulasi terlebih dahulu di halaman utama.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="clear-history-btn">Hapus Semua Riwayat</button>
+    </div>
+    </div>
+
+    <div id="profil-page" class="page-section">
+    <div class="header-content">
+        <h1>Profil</h1>
+        <div class="header-avatar">
+            <span>Halo, Reza</span>
+            <img src="https://i.pravatar.cc/100" alt="User Avatar" />
+        </div>
+    </div>
+    <div class="card-grid profile-grid">
+        <div class="card profile-info-card">
+            <h2 class="card-title">Informasi Pribadi</h2>
+            <div class="profile-avatar-container">
+                <img src="https://i.pravatar.cc/100" alt="User Avatar" class="profile-avatar" />
+                <button class="edit-avatar-btn"><i class="fas fa-camera"></i></button>
+            </div>
+            <div class="profile-details">
+                <div class="detail-item">
+                    <span class="detail-label">Nama Lengkap</span>
+                    <span class="detail-value">Reza Kurniawan</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">reza.kurniawan@example.com</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Nomor Telepon</span>
+                    <span class="detail-value">+62 812-3456-7890</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Tanggal Bergabung</span>
+                    <span class="detail-value">15 Januari 2024</span>
+                </div>
+            </div>
+            <button class="edit-profile-btn">Edit Profil</button>
+        </div>
+
+        <div class="card activity-card">
+            <h2 class="card-title">Aktivitas Terkini</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <i class="fas fa-calculator activity-icon"></i>
+                    <p class="activity-text">Melakukan kalkulasi baru</p>
+                    <span class="activity-time">3 jam yang lalu</span>
+                </div>
+                <div class="activity-item">
+                    <i class="fas fa-history activity-icon"></i>
+                    <p class="activity-text">Melihat riwayat kalkulasi</p>
+                    <span class="activity-time">1 hari yang lalu</span>
+                </div>
+                <div class="activity-item">
+                    <i class="fas fa-cog activity-icon"></i>
+                    <p class="activity-text">Mengubah pengaturan bahasa</p>
+                    <span class="activity-time">2 hari yang lalu</span>
+                </div>
+            </div>
+            <button class="view-history-btn">Lihat Semua Riwayat</button>
+        </div>
+    </div>
+    </div>
+
+<div id="website-page" class="page-section">
+    <div class="header-content">
+        <h1>JGRP VIP Package</h1>
+        <div class="header-avatar">
+            <span>Halo, Reza</span>
+            <img src="https://i.pravatar.cc/100" alt="User Avatar" />
+        </div>
+    </div>
+
+    <div class="card hero-card">
+        <h2 class="card-title-hero">Dapatkan Status VIP dan Dukung Komunitas Kami!</h2>
+        <p class="hero-text">
+            Bantu kami dalam mendanai biaya operasional server. Dapatkan berbagai keuntungan in-game eksklusif dan status VIP di Forum dan Teamspeak.
+        </p>
+    </div>
+
+    <h2 class="section-title">Pilih Paket VIP Terbaik untuk Anda</h2>
+    <div class="card-grid pricing-grid">
+        <div class="card pricing-card">
+            <h3 class="pricing-title">Basic Package</h3>
+            <p class="pricing-price">Rp 100.000<span class="pricing-per">/ 90 hari</span></p>
+            <ul class="pricing-features">
+                <li><i class="fas fa-coins"></i> 90 Gold Points</li>
+                <li><i class="fas fa-car"></i> Beli mobil impor</li>
+                <li><i class="fas fa-tshirt"></i> Akses aksesoris khusus</li>
+                <li><i class="fas fa-home"></i> Batas properti lebih tinggi</li>
+                <li><i class="fas fa-users"></i> Usergroup VIP di Forum & Teamspeak</li>
+            </ul>
+            <button class="select-plan-btn">Beli Sekarang</button>
+        </div>
+        <div class="card pricing-card recommended">
+            <span class="tag">Rekomendasi</span>
+            <h3 class="pricing-title">Advanced Package</h3>
+            <p class="pricing-price">Rp 200.000<span class="pricing-per">/ 180 hari</span></p>
+            <ul class="pricing-features">
+                <li><i class="fas fa-coins"></i> 180 Gold Points</li>
+                <li><i class="fas fa-car"></i> Beli mobil impor</li>
+                <li><i class="fas fa-tshirt"></i> Akses aksesoris khusus</li>
+                <li><i class="fas fa-home"></i> Batas properti lebih tinggi</li>
+                <li><i class="fas fa-users"></i> Usergroup VIP di Forum & Teamspeak</li>
+            </ul>
+            <button class="select-plan-btn">Beli Sekarang</button>
+        </div>
+        <div class="card pricing-card">
+            <h3 class="pricing-title">Professional Package</h3>
+            <p class="pricing-price">Rp 500.000<span class="pricing-per">/ 365 hari</span></p>
+            <ul class="pricing-features">
+                <li><i class="fas fa-coins"></i> 365 Gold Points</li>
+                <li><i class="fas fa-car"></i> Beli mobil impor</li>
+                <li><i class="fas fa-tshirt"></i> Akses aksesoris khusus</li>
+                <li><i class="fas fa-home"></i> Batas properti lebih tinggi</li>
+                <li><i class="fas fa-users"></i> Usergroup VIP di Forum & Teamspeak</li>
+            </ul>
+            <button class="select-plan-btn">Beli Sekarang</button>
+        </div>
+        <div class="card pricing-card">
+            <h3 class="pricing-title">Lifetime Package</h3>
+            <p class="pricing-price">Rp 1.000.000<span class="pricing-per">/ selamanya</span></p>
+            <ul class="pricing-features">
+                <li><i class="fas fa-coins"></i> Gold Points tak terbatas</li>
+                <li><i class="fas fa-car"></i> Beli mobil impor</li>
+                <li><i class="fas fa-tshirt"></i> Akses aksesoris khusus</li>
+                <li><i class="fas fa-home"></i> Batas properti lebih tinggi</li>
+                <li><i class="fas fa-users"></i> Usergroup VIP di Forum & Teamspeak</li>
+            </ul>
+            <button class="select-plan-btn">Beli Sekarang</button>
+        </div>
+    </div>
+</div>
+
+  <div id="pengaturan-page" class="page-section">
+      <div class="header-content">
+          <h1>Pengaturan</h1>
+          <div class="header-avatar">
+              <span>Halo, Reza</span>
+              <img src="https://i.pravatar.cc/100" alt="User Avatar" />
+          </div>
+      </div>
+      <div class="card-grid settings-grid">
+          <div class="card settings-card">
+              <h2 class="card-title">Pengaturan Umum</h2>
+              <div class="settings-group">
+                  <div class="setting-item">
+                      <label for="theme-switch" class="setting-label">Mode Gelap (Dark Mode)</label>
+                      <label class="switch">
+                          <input type="checkbox" id="theme-switch" />
+                          <span class="slider round"></span>
+                      </label>
+                  </div>
+                  <div class="setting-item">
+                      <label for="language-select" class="setting-label">Bahasa</label>
+                      <select id="language-select" class="setting-select">
+                          <option value="id">Bahasa Indonesia</option>
+                          <option value="en">English</option>
+                      </select>
+                      
+                  </div>
+              </div>
+          </div>
+          <div class="card settings-card">
+              <h2 class="card-title">Privasi & Keamanan</h2>
+              <div class="settings-group">
+                  <div class="setting-item">
+                      <label class="setting-label">Ubah Kata Sandi</label>
+                      <a href="#" class="setting-action-link">Ubah</a>
+                  </div>
+                  <div class="setting-item">
+                      <label for="2fa-switch" class="setting-label">Verifikasi Dua Langkah</label>
+                      <label class="switch">
+                          <input type="checkbox" id="2fa-switch" />
+                          <span class="slider round"></span>
+                      </label>
+                  </div>
+                  <div class="setting-item">
+                      <label class="setting-label">Kelola Perangkat</label>
+                      <a href="#" class="setting-action-link">Lihat</a>
+                  </div>
+              </div>
+          </div>
+          <div class="card settings-card">
+              <h2 class="card-title">Tentang Aplikasi</h2>
+              <div class="settings-group">
+                  <div class="setting-item">
+                      <span class="setting-label">Versi</span>
+                      <span class="setting-info">1.0.0</span>
+                  </div>
+                  <div class="setting-item">
+                      <a href="#" class="setting-link">Syarat & Ketentuan</a>
+                  </div>
+                  <div class="setting-item">
+                      <a href="#" class="setting-link">Kebijakan Privasi</a>
+                  </div>
+              </div>
+          </div>
+          <div class="card settings-card">
+              <h2 class="card-title">Akun</h2>
+              <div class="settings-group">
+                  <div class="setting-item">
+                      <p class="placeholder-text">Kelola informasi akun Anda dan opsi privasi.</p>
+                  </div>
+                  <button class="logout-button">Keluar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    </main>
+  </div>
+  <!-- <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-section footer-about">
+            <div class="footer-logo">
+                <img src="https://i.postimg.cc/FHxx6SW-V/Logo-Meka-Kalku-JGRP.png" alt="MekaKalku Logo" />
+                <h3 class="footer-brand-name">MekaKalku</h3>
+            </div>
+            <p class="footer-description">
+                Solusi all-in-one untuk kalkulasi cerdas, manajemen data, dan pengembangan website yang inovatif.
+            </p>
+        </div>
+        <div class="footer-section footer-links">
+            <h4>Tautan Cepat</h4>
+            <ul>
+                <li><a href="#" data-page="kalkulator">Kalkulator</a></li>
+                <li><a href="#" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" data-page="website">Website</a></li>
+                <li><a href="#" data-page="profil">Profil</a></li>
+            </ul>
+        </div>
+        <div class="footer-section footer-contact">
+            <h4>Hubungi Kami</h4>
+            <p>
+                <i class="fas fa-map-marker-alt"></i> Yogyakarta, Indonesia
+            </p>
+            <p>
+                <i class="fas fa-envelope"></i> admin@mekakalku.com
+            </p>
+            <p>
+                <i class="fas fa-phone"></i> +62 812-345-6789
+            </p>
+        </div>
+        <div class="footer-section footer-social">
+            <h4>Ikuti Kami</h4>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+   
+</footer> -->
+<footer>
+   <div class="footer-bottom">
+        <p>&copy; 2024 MekaKalku. Semua Hak Cipta Dilindungi.</p>
+    </div>
+</footer>
+ <script>
+    const buttons = document.querySelectorAll('.sidebar-menu button');
+    const pages = document.querySelectorAll('.page-section');
+    const LAST_PAGE_KEY = 'lastActivePage';
+    const DEFAULT_PAGE_ID = 'kalkulator-page';
+
+    function setPage(pageId) {
+        // Hapus kelas aktif dari semua tombol dan halaman
+        buttons.forEach(btn => btn.classList.remove('active'));
+        pages.forEach(page => page.classList.remove('active'));
+        
+        // Temukan tombol dan halaman yang sesuai dan tambahkan kelas aktif
+        const activeButton = document.querySelector(`button[data-page="${pageId.replace('-page', '')}"]`);
+        const targetPage = document.getElementById(pageId);
+        
+        if (activeButton && targetPage) {
+            activeButton.classList.add('active');
+            targetPage.classList.add('active');
+        }
+    }
+
+    // Fungsi untuk memuat halaman terakhir yang dilihat saat halaman dimuat
+    function loadLastPage() {
+        const lastPage = localStorage.getItem(LAST_PAGE_KEY);
+        if (lastPage) {
+            setPage(lastPage);
+        } else {
+            setPage(DEFAULT_PAGE_ID);
+        }
+    }
+
+    // Tambahkan event listener untuk setiap tombol
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const pageId = this.getAttribute('data-page') + '-page';
+            setPage(pageId);
+            // Simpan ID halaman saat ini ke localStorage
+            localStorage.setItem(LAST_PAGE_KEY, pageId);
+        });
+    });
+    // Panggil fungsi untuk memuat halaman terakhir saat halaman pertama kali dimuat
+    document.addEventListener('DOMContentLoaded', loadLastPage);
+
+
+        // Tambahkan skrip dark mode di dalam tag <script> yang sudah ada
+    const themeSwitch = document.getElementById('theme-switch');
+    const body = document.body;
+    const DARK_MODE_KEY = 'darkModeEnabled';
+
+    // Fungsi untuk mengaktifkan atau menonaktifkan mode gelap
+    function toggleDarkMode(isDarkMode) {
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+    }
+
+    // Tambahkan event listener untuk tombol dark mode
+    themeSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            toggleDarkMode(true);
+            localStorage.setItem(DARK_MODE_KEY, 'enabled');
+        } else {
+            toggleDarkMode(false);
+            localStorage.setItem(DARK_MODE_KEY, 'disabled');
+        }
+    });
+
+    // Periksa preferensi dark mode yang tersimpan saat halaman dimuat
+    function loadThemePreference() {
+        const savedTheme = localStorage.getItem(DARK_MODE_KEY);
+        if (savedTheme === 'enabled') {
+            themeSwitch.checked = true;
+            toggleDarkMode(true);
+        } else {
+            themeSwitch.checked = false;
+            toggleDarkMode(false);
+        }
+    }
+
+    // Panggil fungsi ini saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        loadLastPage();
+        loadThemePreference();
+    });
+    
+  </script>
+</body>
+</html>
