@@ -91,7 +91,7 @@
 
     .table-container tbody {
       display: block;
-      max-height: 500px; 
+      max-height: 500px;
       overflow-y: auto;
     }
 
@@ -129,7 +129,7 @@ th {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 1px;
   }
-      
+
 
     tr:nth-child(even) {
       background-color: #f9f9f9;
@@ -146,13 +146,13 @@ th {
       color: #007bff;
       background: linear-gradient(135deg, #df4d215e, rgba(212, 234, 255, 0.8));
     }
-      
+
     .HargaJual {
       font-weight: bold;
       color: #007bff;
       background: linear-gradient(135deg, rgba(0, 128, 0, 0.267), rgba(212, 234, 255, 0.8));
     }
-    
+
     .TombolAction {
       font-weight: bold;
       color: #007bff;
@@ -173,7 +173,7 @@ th {
       border-radius: 10px;
       text-align: center;
     }
-    
+
     .total-box {
       background: linear-gradient(135deg, rgba(234, 244, 255, 0.8), rgba(212, 234, 255, 0.8));
       backdrop-filter: blur(12px);
@@ -189,7 +189,7 @@ th {
       font-size: 16px;
       font-weight: bold;
       color: #424242b2;
-      
+
     }
 
     .total-box strong {
@@ -220,87 +220,95 @@ th {
     button:hover {
       background-color: #0056b3;
     }
-    
-      /* Overlay */
-      .popup-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease forwards;
-      }
 
-      /* Konten Popup */
-      .popup-content {
-       background: rgba(255, 255, 255, 0.966);
-        padding: 20px 25px;
-        border-radius: 10px;
-        width: 320px;
-        max-width: 90%;
-        text-align: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        transform: scale(0.8);
-        opacity: 0;
-        animation: popUp 0.3s ease forwards;
-      }
+/* Gaya Umum untuk Pop-up yang Lebih Elegan */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease forwards;
+}
 
-      .popup-content h3 {
-        margin-bottom: 10px;
-        color: #333;
-      }
+.popup-content {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 30px;
+    border-radius: 12px;
+    width: 380px;
+    max-width: 90%;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px);
+    opacity: 0;
+    animation: slideUp 0.3s ease forwards;
+}
 
-      .popup-content p {
-        margin-bottom: 20px;
-        color: #555;
-        font-size: 14px;
-      }
+/* Animasi untuk Pop-up */
+@keyframes fadeIn {
+    from { background: rgba(0,0,0,0); }
+    to { background: rgba(0,0,0,0.5); }
+}
 
-      .popup-buttons {
-        display: flex;
-        justify-content: space-around;
-      }
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(-10px); opacity: 1; }
+}
 
-      .popup-buttons button {
-        padding: 8px 14px;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background 0.2s ease;
-      }
+.popup-content h3 {
+    color: rgba(8, 102, 202, 0.85);
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(8, 102, 202, 0.2);
+    padding-bottom: 10px;
+}
 
-      .btn-ya {
-        background: linear-gradient(135deg, rgba(8, 102, 202, 0.85), rgba(6, 71, 150, 0.85));
-        color: #fff;
-        transition: background 0.3s ease;
-      }
+.popup-content p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center; /* Teks paragraf tetap di tengah */
+}
 
-      .btn-ya:hover {
-         background: linear-gradient(135deg, rgba(7, 34, 63, 0.85), rgba(6, 71, 150, 0.85));
-      }
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end; /* Tombol rata kanan */
+}
 
-      .btn-batal {
-        background: #ccc;
-      }
+.popup-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
 
-      .btn-batal:hover {
-        background: #aaa;
-      }
+/* Gaya Tombol "Ya" (Konfirmasi) */
+.btn-ya {
+    background: linear-gradient(135deg, #d9534f, #c14440);
+    color: #fff;
+}
 
-      /* Animasi muncul */
-      @keyframes fadeIn {
-        from { background: rgba(0,0,0,0); }
-        to { background: rgba(0,0,0,0.5); }
-      }
+.btn-ya:hover {
+    background: linear-gradient(135deg, #c14440, #a93c37);
+    box-shadow: 0 4px 8px rgba(217, 83, 79, 0.3);
+}
 
-      @keyframes popUp {
-        0% { transform: scale(0.8); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-      }
-      
+/* Gaya Tombol "Batal" */
+.btn-batal {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-batal:hover {
+    background: #d0d0d0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
     .MekaKalku {
       display: block;
       margin: 30px auto;
@@ -321,8 +329,96 @@ th {
       transform: translateY(-6px) scale(1.03);
       box-shadow:
         0 12px 32px rgba(8, 102, 202, 0.85),
-        0 0 12px rgba(6, 71, 150, 0.6);
+        0 0 12px rgba(6, 71, 150, 0.85);
     }
+    
+      /* Gaya untuk Pop-up Tempel Kode yang Lebih Elegan */
+    #popupPasteCode .popup-content {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 30px;
+    border-radius: 12px;
+    width: 450px;
+    max-width: 90%;
+    text-align: left; /* Alihkan teks ke kiri untuk kesan modern */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px); /* Efek sedikit turun saat muncul */
+    opacity: 0;
+    animation: slideUp 0.3s ease forwards;
+    }
+
+    @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(-10px); opacity: 1; }
+    }
+
+    #popupPasteCode h3 {
+    color: rgba(8, 102, 202, 0.85); /* Warna tema utama */
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(8, 102, 202, 0.2); /* Garis bawah tema */
+    padding-bottom: 10px;
+    }
+
+    #popupPasteCode p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    }
+
+    #pasteCodeTextarea {
+    width: calc(100% - 22px); /* Agar tidak mentok ke padding */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 25px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s ease;
+    }
+
+    #pasteCodeTextarea:focus {
+    outline: none;
+    border-color: rgba(8, 102, 202, 0.7); /* Warna fokus tema */
+    box-shadow: 0 0 8px rgba(8, 102, 202, 0.2);
+    }
+
+    #popupPasteCode .popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end; /* Tombol rata kanan untuk modern look */
+    }
+
+    #popupPasteCode .popup-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    #popupPasteCode .popup-buttons .btn-ya {
+    background: linear-gradient(135deg, rgba(8, 102, 202, 0.9), rgba(6, 71, 150, 0.9)); /* Lebih intens */
+    color: #fff;
+    }
+
+    #popupPasteCode .popup-buttons .btn-ya:hover {
+    background: linear-gradient(135deg, rgba(7, 82, 161, 0.9), rgba(5, 57, 120, 0.9));
+    box-shadow: 0 4px 8px rgba(8, 102, 202, 0.3);
+    }
+
+    #popupPasteCode .popup-buttons .btn-batal {
+    background: #e0e0e0;
+    color: #333;
+    }
+
+    #popupPasteCode .popup-buttons .btn-batal:hover {
+    background: #d0d0d0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
     @media (max-width: 600px) {
       body {
@@ -347,6 +443,8 @@ th {
       <button id="hapusBtn" class="delete-btn" onclick="showPopup()">Hapus yang dipilih</button>
       <button onclick="hapusSemua()">Hapus Semua Riwayat</button>
       <button onclick="cetakPDF()">Cetak Hasil</button>
+      <button onclick="salinRiwayat()">Import</button>
+      <button onclick="showPasteCodePopup()">Export</button>
     </div>
     <ul style="display: flex; gap: 16px; list-style: none; padding: 0; margin: 20px 0 0 0; justify-content: center;">
       <li><a href="index.html" style="text-decoration: none; color: #007BFF;">Kalkulator Komponen</a></li>
@@ -359,10 +457,9 @@ th {
   </div>
 
 
-  <!-- Popup Konfirmasi -->
   <div id="popupConfirm" class="popup-overlay">
     <div class="popup-content">
-      <h3>Confirmation alert 📢</h3>
+      <h3>Hapus data yang di pilih?</h3>
       <p>Apakah kamu ingin menghapus data yang di pilih?</p>
       <div class="popup-buttons">
         <button class="btn-ya" onclick="hapusTerpilih()">Ya</button>
@@ -371,6 +468,19 @@ th {
     </div>
   </div>
 
+  <div id="popupPasteCode" class="popup-overlay">
+    <div class="popup-content">
+      <h3>Tempel Kode Riwayat</h3>
+      <p>Salin kode riwayat dari sumber lain dan tempelkan di bawah ini.</p>
+      <textarea id="pasteCodeTextarea" placeholder="Masukkan kode riwayat di sini..." rows="6"></textarea>
+      <div class="popup-buttons">
+        <button class="btn-ya" onclick="prosesImpor()">Tempel & Proses</button>
+        <button class="btn-batal" onclick="closePasteCodePopup()">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
   <script>
     let dataRiwayat = JSON.parse(localStorage.getItem('riwayatComponent')) || [];
     const container = document.getElementById('riwayatContainer');
@@ -390,7 +500,7 @@ th {
         <div class="table-container">
         <table>
           <thead>
-            <tr>   
+            <tr>
               <th>No</th>
               <th>Component Used</th>
               <th>Harga Asli</th>
@@ -456,33 +566,70 @@ th {
       document.getElementById('popupConfirm').style.display = 'none';
     }
 
-    function hapusTerpilih() {
-      const checkboxTerpilih = document.querySelectorAll('.hapusCheckbox:checked');
-      if (checkboxTerpilih.length === 0) {
-        alert('Pilih data yang ingin dihapus.');
-        closePopup();
-        return;
-      }
+function hapusTerpilih() {
+  if (dataRiwayat.length === 0) {
+    Swal.fire('Informasi', 'Tidak ada data riwayat yang bisa dihapus.', 'info');
+    closePopup(); // Pastikan pop-up konfirmasi juga tertutup
+    return; // Hentikan fungsi jika tidak ada data
+  }
 
-      const indexTerpilih = Array.from(checkboxTerpilih)
-        .map(cb => parseInt(cb.getAttribute('data-index')));
+  const checkboxTerpilih = document.querySelectorAll('.hapusCheckbox:checked');
+  if (checkboxTerpilih.length === 0) {
+    Swal.fire('Peringatan', 'Pilih setidaknya satu data yang ingin dihapus.', 'warning');
+    closePopup();
+    return;
+  }
 
-      dataRiwayat = dataRiwayat.filter((_, index) => !indexTerpilih.includes(index));
-      localStorage.setItem('riwayatComponent', JSON.stringify(dataRiwayat));
+  const indexTerpilih = Array.from(checkboxTerpilih)
+    .map(cb => parseInt(cb.getAttribute('data-index')));
+
+  dataRiwayat = dataRiwayat.filter((_, index) => !indexTerpilih.includes(index));
+  localStorage.setItem('riwayatComponent', JSON.stringify(dataRiwayat));
+  renderTable();
+  closePopup();
+  Swal.fire(
+    'Berhasil Dihapus!',
+    'Data yang dipilih telah dihapus.',
+    'success'
+  );
+}
+
+      function hapusSemua() {
+  if (dataRiwayat.length === 0) {
+    Swal.fire('Informasi', 'Tidak ada data riwayat yang bisa dihapus.', 'info');
+    return; // Hentikan fungsi jika tidak ada data
+  }
+
+  Swal.fire({
+    title: 'Yakin mau hapus semua?',
+    text: "Tindakan ini tidak bisa dibatalkan!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#ccc',
+    confirmButtonText: 'Ya, Hapus!',
+    cancelButtonText: 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem('riwayatComponent');
+      dataRiwayat = [];
       renderTable();
-      closePopup();
+      Swal.fire(
+        'Berhasil Dihapus!',
+        'Semua riwayat telah dihapus.',
+        'success'
+      );
     }
+  });
+}
 
+async function cetakPDF() {
+  // Periksa apakah ada data riwayat
+  if (dataRiwayat.length === 0) {
+    Swal.fire('Informasi', 'Tidak ada data riwayat yang bisa dicetak.', 'info');
+    return; // Hentikan fungsi jika tidak ada data
+  }
 
-    function hapusSemua() {
-      if (confirm("Yakin ingin menghapus semua riwayat?")) {
-        localStorage.removeItem('riwayatComponent');
-        dataRiwayat = [];
-        renderTable();
-      }
-    }
-
-  async function cetakPDF() {
   Swal.fire({
     title: 'Konfirmasi Cetak PDF',
     text: 'Apakah kamu ingin melakukan cetak PDF?',
@@ -502,7 +649,6 @@ th {
       doc.setFontSize(12);
       doc.text(`Tanggal Cetak: ${new Date().toLocaleString()}`, 14, 23);
 
-      // Ambil data tabel
       const tableColumn = ["No", "Component", "Harga Asli", "Keuntungan", "Harga Jual", "Waktu Input"];
       const tableRows = [];
 
@@ -528,7 +674,6 @@ th {
         totalHargaJual += item.hargaJual;
       });
 
-      // Tampilkan tabel ke PDF
       doc.autoTable({
         head: [tableColumn],
         body: tableRows,
@@ -536,7 +681,6 @@ th {
         styles: { fontSize: 10 }
       });
 
-      // Tambah total di bawah tabel
       let finalY = doc.lastAutoTable.finalY + 10;
       doc.setFontSize(12);
       doc.text("Ringkasan Total:", 14, finalY);
@@ -547,7 +691,6 @@ th {
       doc.text(`Total Keuntungan: $${totalKeuntungan.toFixed(2)}`, 14, finalY);
       doc.text(`Total Harga Jual: $${totalHargaJual.toFixed(2)}`, 80, finalY);
 
-      // Footer
       finalY += 15;
       doc.setFontSize(10);
       doc.setTextColor(150);
@@ -555,10 +698,8 @@ th {
       finalY += 5;
       doc.text("Made with ❤️ by Ckyandaa2", 14, finalY);
 
-      // Simpan PDF
       doc.save("MekaKalku Riwayat_Penjualan.pdf");
 
-      // Notifikasi sukses
       Swal.fire(
         'Berhasil!',
         'PDF berhasil dibuat dan diunduh.',
@@ -567,16 +708,108 @@ th {
     }
   });
 }
-    document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });
 
+// --- FUNGSI BARU UNTUK ENKRIPSI DAN DEKRIPSI ---
+
+// Fungsi untuk mengompres dan mengenkripsi data
+function enkripsiData(data) {
+  const dataJson = JSON.stringify(data);
+  // Menggunakan lz-string untuk kompresi dan encoding
+  return LZString.compressToBase64(dataJson);
+}
+
+// Fungsi untuk mendekripsi dan mengurai data
+function dekripsiData(kode) {
+  try {
+    const dataJson = LZString.decompressFromBase64(kode);
+    if (!dataJson) {
+      throw new Error("Kode tidak valid.");
+    }
+    const data = JSON.parse(dataJson);
+    return data;
+  } catch (e) {
+    console.error("Gagal mendekripsi kode:", e);
+    Swal.fire('Error', 'Kode yang Anda masukkan tidak valid.', 'error');
+    return null;
+  }
+}
+
+// Fungsi untuk menyalin riwayat ke kode
+function salinRiwayat() {
+  if (dataRiwayat.length === 0) {
+    Swal.fire('Informasi', 'Tidak ada data untuk disalin.', 'info');
+    return;
+  }
+
+  const kode = enkripsiData(dataRiwayat);
+  navigator.clipboard.writeText(kode)
+    .then(() => {
+      Swal.fire('Berhasil!', 'Kode riwayat berhasil disalin.', 'success');
+    })
+    .catch(err => {
+      console.error('Gagal menyalin kode:', err);
+      Swal.fire('Error', 'Gagal menyalin kode.', 'error');
+    });
+}
+
+// Fungsi untuk menampilkan pop-up tempel kode
+function showPasteCodePopup() {
+  document.getElementById('popupPasteCode').style.display = 'flex';
+}
+
+// Fungsi untuk menutup pop-up tempel kode
+function closePasteCodePopup() {
+  document.getElementById('popupPasteCode').style.display = 'none';
+  document.getElementById('pasteCodeTextarea').value = ''; // Bersihkan textarea
+}
+
+// Fungsi untuk memproses impor data dari kode
+function prosesImpor() {
+  const textarea = document.getElementById('pasteCodeTextarea');
+  const kode = textarea.value.trim();
+
+  if (!kode) {
+    Swal.fire('Peringatan', 'Input kode tidak boleh kosong.', 'warning');
+    return;
+  }
+
+  const dataBaru = dekripsiData(kode);
+
+  if (dataBaru) {
+    Swal.fire({
+      title: 'Konfirmasi Impor',
+      text: "Apakah Anda ingin menambahkan data baru atau mengganti riwayat yang ada?",
+      icon: 'question',
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonColor: '#0866CAD9',
+      denyButtonColor: '#d33',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: 'Tambah Data',
+      denyButtonText: 'Ganti Riwayat',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dataRiwayat = dataRiwayat.concat(dataBaru);
+        localStorage.setItem('riwayatComponent', JSON.stringify(dataRiwayat));
+        renderTable();
+        Swal.fire('Berhasil!', 'Data riwayat berhasil ditambahkan.', 'success');
+      } else if (result.isDenied) {
+        dataRiwayat = dataBaru;
+        localStorage.setItem('riwayatComponent', JSON.stringify(dataRiwayat));
+        renderTable();
+        Swal.fire('Berhasil!', 'Riwayat berhasil diganti.', 'success');
+      }
+      closePasteCodePopup(); // Tutup pop-up setelah proses
+    });
+  }
+}
 
 
     // From analisa
      document.addEventListener('DOMContentLoaded', (event) => {
         const pageName = window.location.pathname.split('/').pop();
-        
+
         // Buat kunci unik untuk sesi ini, misal: "visited_index.html"
         const sessionKey = `visited_${pageName}`;
 
@@ -584,15 +817,15 @@ th {
         if (!sessionStorage.getItem(sessionKey)) {
             // Jika belum ada di sessionStorage, catat sebagai kunjungan baru
             let visitData = JSON.parse(localStorage.getItem('myWebsiteAnalytics')) || {};
-            
+
             if (visitData[pageName]) {
                 visitData[pageName] += 1;
             } else {
                 visitData[pageName] = 1;
             }
-            
+
             localStorage.setItem('myWebsiteAnalytics', JSON.stringify(visitData));
-            
+
             console.log(`Kunjungan ke halaman "${pageName}" tercatat.`);
 
             // Tambahkan penanda ke sessionStorage agar tidak dihitung lagi di sesi ini
@@ -604,9 +837,8 @@ th {
 
     renderTable();
   </script>
-  
-  <!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
